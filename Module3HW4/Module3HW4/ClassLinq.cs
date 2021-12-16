@@ -15,32 +15,30 @@ namespace Module3HW4
             _contacts = new List<Contact>();
         }
 
-        public Contact FirstOfDefaultContact(string fullName)
+        public void AddContact(Contact contact)
         {
-            var contact = _contacts.FirstOrDefault(f => f.FullName == fullName);
+            _contacts.Add(contact);
+        }
+
+        public Contact FirstOfDefaultContact(string firstName)
+        {
+            var contact = _contacts.FirstOrDefault(f => f.FirstName == firstName);
 
             return contact;
         }
 
-        public List<Contact> SelectContact(string numberPhone)
+        public List<Contact> WhereContact(char litter)
         {
-            var contacts = _contacts.Select(s => s.Phone.StartsWith(numberPhone));
+            var contacts = _contacts.Where(w => w.FullName.ElementAt(0) == litter).Select(s => s);
 
-            return (List<Contact>)contacts;
+            return contacts.ToList();
         }
 
-        public List<Contact> WhereContact(string litter)
+        public List<Contact> OrderByContact()
         {
-            var contacts = _contacts.Where(w => w.FullName.ToUpper() == litter);
+            var contacts = _contacts.OrderBy(o => o.FullName);
 
-            return (List<Contact>)contacts;
-        }
-
-        public List<Contact> OrderByContact(string numberPhone)
-        {
-            var contacts = _contacts.Where(w => w.Phone == numberPhone).OrderBy(o => o);
-
-            return (List<Contact>)contacts;
+            return contacts.ToList();
         }
 
         public bool AnyContact(string numberPhone)
@@ -48,13 +46,6 @@ namespace Module3HW4
             var result = _contacts.Any(a => a.Phone == numberPhone);
 
             return result;
-        }
-
-        public List<Contact> GroupByContact()
-        {
-            var contacts = _contacts.GroupBy(g => g.FullName);
-
-            return (List<Contact>)contacts;
         }
     }
 }
